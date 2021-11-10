@@ -25,7 +25,7 @@ class ClientsTest extends TestCase
 
         ];
 
-        $this->post('/clients', $clientInfo);
+        $this->post('/clients', $clientInfo)->assertRedirect('/clients');
 
         $this->assertDatabaseHas('clients', $clientInfo);
 

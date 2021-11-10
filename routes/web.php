@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,16 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/clients', function () {
-    $clients = App\Models\Client::all();
+Route::get('/clients',  [ClientsController::class, 'index']);
 
-    return view('clients.index', compact('clients'));
-});
-
-Route::post('/clients', function () {
-    //validate
-
-    //persist
-    App\Models\Client::create(request(['name', 'email']));
-    //redirect
-});
+Route::post('/clients', [ClientsController::class, 'store']);
