@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/clients', function () {
-    $client = App\Models\Client::all();
+    $clients = App\Models\Client::all();
 
     return view('clients.index', compact('clients'));
 });
