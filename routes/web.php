@@ -16,3 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/clients', function () {
+    $client = App\Models\Client::all();
+
+    return view('clients.index', compact('clients'));
+});
+
+Route::post('/clients', function () {
+    //validate
+
+    //persist
+    App\Models\Client::create(request(['name', 'email']));
+    //redirect
+});
