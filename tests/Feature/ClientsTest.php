@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -30,5 +31,21 @@ class ClientsTest extends TestCase
         $this->assertDatabaseHas('clients', $clientInfo);
 
         $this->get('/clients')->assertSee($clientInfo['name']);
+    }
+
+    /** @test */
+    public function test_a_client_requires_a_name()
+    {
+        $clientInfo = Client::factory()->raw(['name' => '']);
+
+        $this->post('/clients', $clientInfo)->assertSessionHasErrors();
+    }
+
+    /** @test */
+    public function test_a_client_requires_an_email()
+    {
+        $clientInfo = Client::factory()->raw(['email' => '']);
+
+        $this->post('/clients', $clientInfo)->assertSessionHasErrors();
     }
 }

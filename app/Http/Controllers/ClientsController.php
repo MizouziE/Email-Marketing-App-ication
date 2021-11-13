@@ -16,7 +16,7 @@ class ClientsController extends Controller
     public function store(Client $client)
     {
         //validate
-
+        request()->validate(['name' => 'required', 'email' => 'required']);
         //persist
         Client::create(request(['name', 'email']));
 
