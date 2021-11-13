@@ -16,7 +16,10 @@ class ClientsController extends Controller
     public function store(Client $client)
     {
         //validate
-        request()->validate(['name' => 'required', 'email' => 'required']);
+        request()->validate([
+            'name' => 'required',
+            'email' => 'required'
+        ]);
         //persist
         Client::create(request(['name', 'email']));
 
@@ -24,10 +27,8 @@ class ClientsController extends Controller
         return redirect('/clients');
     }
 
-    public function show()
+    public function show(Client $client)
     {
-        $client = Client::findOrFail(request('client'));
-
         return view('clients.show', compact('client'));
     }
 }

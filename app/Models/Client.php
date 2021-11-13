@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    protected $guarded = [];
-    
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function path()
+    {
+        return "/clients/{$this->id}";
+    }
 }

@@ -40,7 +40,7 @@ class ClientsTest extends TestCase
 
         $client = Client::factory()->create();
 
-        $this->get('/clients/' . $client->id)
+        $this->get($client->path())
             ->assertSee($client->name)
             ->assertSee($client->email);
     }
