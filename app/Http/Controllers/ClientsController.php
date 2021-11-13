@@ -23,4 +23,11 @@ class ClientsController extends Controller
         //redirect
         return redirect('/clients');
     }
+
+    public function show()
+    {
+        $client = Client::findOrFail(request('client'));
+
+        return view('clients.show', compact('client'));
+    }
 }

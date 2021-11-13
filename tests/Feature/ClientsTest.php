@@ -34,6 +34,18 @@ class ClientsTest extends TestCase
     }
 
     /** @test */
+    public function a_user_can_view_a_client()
+    {
+        $this->withoutExceptionHandling();
+
+        $client = Client::factory()->create();
+
+        $this->get('/clients/' . $client->id)
+            ->assertSee($client->name)
+            ->assertSee($client->email);
+    }
+
+    /** @test */
     public function test_a_client_requires_a_name()
     {
         $clientInfo = Client::factory()->raw(['name' => '']);

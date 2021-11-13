@@ -21,3 +21,5 @@ Route::get('/', function () {
 Route::get('/clients',  [ClientsController::class, 'index']);
 
 Route::post('/clients', [ClientsController::class, 'store']);
+
+Route::get('/clients/{client}', [ClientsController::class, 'show']);
