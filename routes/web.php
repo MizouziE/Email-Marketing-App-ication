@@ -23,3 +23,11 @@ Route::get('/clients',  [ClientsController::class, 'index']);
 Route::post('/clients', [ClientsController::class, 'store'])->middleware('auth');
 
 Route::get('/clients/{client}', [ClientsController::class, 'show']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
