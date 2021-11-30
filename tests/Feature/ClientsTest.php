@@ -64,8 +64,6 @@ class ClientsTest extends TestCase
     /** @test */
     public function test_a_client_requires_a_provider()
     {
-        $this->withoutExceptionHandling();
-
         $clientInfo = Client::factory()->raw();
 
         $this->post('/clients', $clientInfo)->assertRedirect('login');
