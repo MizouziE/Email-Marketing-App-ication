@@ -16,12 +16,15 @@ class ClientsController extends Controller
     public function store(Client $client)
     {
         //validate
-        request()->validate([
+        $clientInfo = request()->validate([
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
         ]);
+
+        $clientInfo['provider_id'] = auth()->id();
+
         //persist
-        Client::create(request(['name', 'email']));
+        Client::create($clientInfo);
 
         //redirect
         return redirect('/clients');

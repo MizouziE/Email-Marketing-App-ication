@@ -50,7 +50,7 @@ class ClientsTest extends TestCase
     {
         $clientInfo = Client::factory()->raw(['name' => '']);
 
-        $this->post('/clients', $clientInfo)->assertSessionHasErrors();
+        $this->post('/clients', $clientInfo)->assertSessionHasErrors('name');
     }
 
     /** @test */
@@ -58,6 +58,16 @@ class ClientsTest extends TestCase
     {
         $clientInfo = Client::factory()->raw(['email' => '']);
 
-        $this->post('/clients', $clientInfo)->assertSessionHasErrors();
+        $this->post('/clients', $clientInfo)->assertSessionHasErrors('email');
+    }
+
+    /** @test */
+    public function test_a_client_requires_a_provider()
+    {
+        $this->withoutExceptionHandling();
+
+        $clientInfo = Client::factory()->raw();
+
+        $this->post('/clients', $clientInfo)->assertRedirect('login');
     }
 }
