@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClientsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/clients',  [ClientsController::class, 'index']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/clients',  [ClientsController::class, 'index']);
+    Route::post('/clients', [ClientsController::class, 'store']);
+    Route::get('/clients/{client}', [ClientsController::class, 'show']);
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
 
-Route::post('/clients', [ClientsController::class, 'store'])->middleware('auth');
-
-Route::get('/clients/{client}', [ClientsController::class, 'show']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

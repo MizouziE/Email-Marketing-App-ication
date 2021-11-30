@@ -8,7 +8,7 @@ class ClientsController extends Controller
 {
     public function index(Client $client)
     {
-        $clients = Client::all();
+        $clients = auth()->user()->clients;
 
         return view('clients.index', compact('clients'));
     }
@@ -27,6 +27,10 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
+        if (auth()->user()->isNot($client->provider)) {
+            abort(403);
+        }
+
         return view('clients.show', compact('client'));
     }
 }
