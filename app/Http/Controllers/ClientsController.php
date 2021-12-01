@@ -8,27 +8,34 @@ class ClientsController extends Controller
 {
     public function index(Client $client)
     {
-        $clients = Client::all();
+        $clients = auth()->user()->clients;
 
         return view('clients.index', compact('clients'));
     }
 
     public function store(Client $client)
     {
-        //validate
-        request()->validate([
+        $clientInfo = request()->validate([
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
         ]);
-        //persist
-        Client::create(request(['name', 'email']));
 
-        //redirect
+        auth()->user()->clients()->create($clientInfo);
+
         return redirect('/clients');
     }
 
     public function show(Client $client)
     {
+        if (auth()->user()->isNot($client->provider)) {
+            abort(403);
+        }
+
         return view('clients.show', compact('client'));
+    }
+
+    public function create()
+    {
+        return view('clients.create');
     }
 }
