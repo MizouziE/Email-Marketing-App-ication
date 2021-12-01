@@ -8,32 +8,18 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ClientsTest extends TestCase
+class ManageClientsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function test_guests_cannot_create_a_client()
-    {
-        $clientInfo = Client::factory()->raw();
-
-        $this->post('/clients', $clientInfo)->assertRedirect('login');
-    }
-
-    /** @test */
-    public function test_guests_cannot_view_clients()
-    {
-        $this->get('/clients')->assertRedirect('login');
-    }
-
-    /** @test */
-    public function test_guests_cannot_view_a_single_client()
+    public function test_guests_cannot_manage_clients()
     {
         $client = Client::factory()->create();
 
-
-
+        $this->get('/clients')->assertRedirect('login');
         $this->get($client->path())->assertRedirect('login');
+        $this->post('/clients', $client->toArray())->assertRedirect('login');
     }
 
     /**
@@ -44,6 +30,8 @@ class ClientsTest extends TestCase
     public function test_a_user_can_create_a_client()
     {
         $this->actingAs(User::factory()->create());
+
+        $this->get('/clients/create')->assertStatus(200);
 
         $clientInfo = [
             'name' => $this->faker->name(),

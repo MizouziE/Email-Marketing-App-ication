@@ -21,8 +21,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/clients',  [ClientsController::class, 'index']);
+    Route::get('/clients/create',  [ClientsController::class, 'create']);
     Route::post('/clients', [ClientsController::class, 'store']);
     Route::get('/clients/{client}', [ClientsController::class, 'show']);
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
