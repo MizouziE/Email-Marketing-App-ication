@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Client::class, 'provider_id');
     }
+
+    public function content()
+    {
+        return $this->hasMany(Content::class, 'provider_id');
+    }
 }
