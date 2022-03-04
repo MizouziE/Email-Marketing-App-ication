@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\ClientsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,17 +14,11 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return redirect('/home');
+    return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/clients',  [ClientsController::class, 'index']);
-    Route::get('/clients/create',  [ClientsController::class, 'create']);
-    Route::post('/clients', [ClientsController::class, 'store']);
-    Route::get('/clients/{client}', [ClientsController::class, 'show']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-});
-
-
-Auth::routes();
+require __DIR__.'/auth.php';
